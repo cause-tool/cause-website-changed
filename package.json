@@ -1,0 +1,29 @@
+{
+  "name": "cause-website-changed",
+  "version": "0.0.0",
+  "description": "check if (part of) a website has changed",
+  "main": "cause-website-changed.js",
+  "scripts": {
+  },
+  "author": "freder.code@gmail.com",
+  "dependencies": {
+    "debug": "^2.1.2",
+    "request": "^2.53.0",
+    "validator": "^3.30.0",
+    "winston": "^0.9.0"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freder/cause-website-changed.git"
+  },
+  "keywords": [
+    "cause"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freder/cause-website-changed/issues"
+  },
+  "homepage": "https://github.com/freder/cause-website-changed"
+}
