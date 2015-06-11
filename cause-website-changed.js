@@ -1,31 +1,29 @@
-// this block checks if a (part of a) website has
-// changed, since the last time we chacked.
-
 var crypto = require('crypto');
 var request = require('request');
 var validator = require('validator');
 
 
-// every block exposes a function cause takes
-// following parameters:
+// every block needs to exposes a function that takes
+// the following parameters:
 function fn(
 		task,		// the task this step is part of
 		step,		// the current step
 		input,		// the previous step's output is this step's input
 		prev_step,	// the previous step
-		done		// callback function(err, output)
+		done		// callback function(err, output, decision)
 	) {
+
+	// additionally, `this` exposes the following fields / functions:
+	var cause = this;
+	// - `cause.save()`: save current task: after `step.data` has changed
+	// - `cause.debug(message)`: log debug message, using [debug](https://www.npmjs.com/package/debug)
+	// - `cause.message_vars`:
+	// [...]
 
 	// when a step is created,
 	// `step.options` and `step.data` are populated with
 	// values from the task config file, or with the defaults
-	// cause the step defines itself. — see end of file.
-
-	var cause = this;
-	// `this` exposes the following fields / functions:
-	// - `cause.save()`: save current task
-	// - `cause.debug(message)`: log debug message, using [debug](https://www.npmjs.com/package/debug)
-	// ...
+	// the step defines itself. → see end of file.
 
 	// validation
 	if (!validator.isURL(step.options.url)) {
@@ -36,7 +34,7 @@ function fn(
 		url: step.options.url
 	};
 	request(req_options, function(err, res, body) {
-		if (err) { return cause.handle_error(err); }
+		if (err) { return done(err); }
 
 		if (res.statusCode != 200) {
 			cause.debug('status code: '+res.statusCode, task.name);
