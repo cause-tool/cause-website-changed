@@ -1,6 +1,6 @@
 {
   "name": "cause-website-changed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "check if (part of) a website has changed",
   "main": "cause-website-changed.js",
   "scripts": {
