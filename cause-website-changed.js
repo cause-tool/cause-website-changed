@@ -50,16 +50,13 @@ function fn(
 		var html = $selection.first().html();
 
 		// create a hash for it
-		var hash = crypto
-			.createHash('md5')
-			.update(html)
-			.digest('hex');
+		var hash = createHash(html);
 
 		// this block simply passes through its input
 		var output = input;
 
 		// check if anything has changed
-		var changed = (hash != step.data.prev_hash);
+		var changed = didChange(hash, step.data.prev_hash);
 
 		// save current hash to file
 		step.data.prev_hash = hash;
@@ -71,7 +68,22 @@ function fn(
 };
 
 
+function createHash(html) {
+	return crypto
+		.createHash('md5')
+		.update(html)
+		.digest('hex');
+}
+
+
+function didChange(current, previous) {
+	return (current != previous);
+}
+
+
 module.exports = {
+	createHash: createHash,
+	didChange: didChange,
 	fn: fn,
 
 	defaults: {
