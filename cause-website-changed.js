@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var crypto = require('crypto');
 var request = require('request');
 var validator = require('validator');
@@ -17,6 +18,7 @@ function fn(
 	var cause = this;
 	// - `cause.save()`: save current task: after `step.data` has changed
 	// - `cause.debug(message)`: log debug message, using [debug](https://www.npmjs.com/package/debug)
+	// - `cause.handle_error(err)`
 	// - `cause.message_vars`:
 	// [...]
 
@@ -34,12 +36,13 @@ function fn(
 		url: step.options.url
 	};
 	request(req_options, function(err, res, body) {
-		if (err) { return done(err); }
+		if (err) { return cause.handle_error(err); }
 
 		if (res.statusCode != 200) {
-			cause.debug('status code: '+res.statusCode, task.name);
-			cause.debug(req_options.url);
-			return;
+			var message = 'status code: '+res.statusCode+'\n'+JSON.stringify(step.options);
+			var err = new Error(message);
+			cause.debug(message);
+			return done(err);
 		}
 
 		// select part of page
@@ -49,14 +52,24 @@ function fn(
 		}
 		var html = $selection.first().html();
 
+		if ($selection.length === 0) {
+			var message = 'empty selection\n'+JSON.stringify(step.options);
+			var err = new Error(message);
+			cause.debug(message);
+			return done(err);
+		}
+
 		// create a hash for it
-		var hash = createHash(html);
+		var hash = crypto
+			.createHash('md5')
+			.update(html)
+			.digest('hex');
 
 		// this block simply passes through its input
 		var output = input;
 
 		// check if anything has changed
-		var changed = didChange(hash, step.data.prev_hash);
+		var changed = (hash != step.data.prev_hash);
 
 		// save current hash to file
 		step.data.prev_hash = hash;
@@ -68,22 +81,7 @@ function fn(
 };
 
 
-function createHash(html) {
-	return crypto
-		.createHash('md5')
-		.update(html)
-		.digest('hex');
-}
-
-
-function didChange(current, previous) {
-	return (current != previous);
-}
-
-
 module.exports = {
-	createHash: createHash,
-	didChange: didChange,
 	fn: fn,
 
 	defaults: {

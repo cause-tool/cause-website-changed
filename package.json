@@ -8,6 +8,7 @@
   },
   "author": "freder.code@gmail.com",
   "dependencies": {
+    "lodash": "^3.9.3",
     "request": "^2.53.0",
     "validator": "^3.30.0"
   },
