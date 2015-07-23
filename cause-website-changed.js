@@ -36,13 +36,12 @@ function fn(
 		url: step.options.url
 	};
 	request(req_options, function(err, res, body) {
-		if (err) { return cause.handle_error(err); }
+		if (err) { return done(err); }
 
 		if (res.statusCode != 200) {
 			var message = 'status code: '+res.statusCode+'\n'+JSON.stringify(step.options);
-			var err = new Error(message);
 			cause.debug(message);
-			return done(err);
+			return done(new Error(message));
 		}
 
 		// select part of page
@@ -77,6 +76,10 @@ function fn(
 
 		// callback
 		done(null, output, changed);
+	}).on('error', function(err) {
+		// make sure to catch those errors
+		// https://github.com/request/request/issues/636#issuecomment-34723546
+		cause.handle_error(err);
 	});
 };
 
