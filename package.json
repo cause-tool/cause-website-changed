@@ -1,6 +1,6 @@
 {
   "name": "cause-website-changed",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "checks if a (part of a) website has changed",
   "main": "index.js",
   "license": "CC-BY-NC-SA-4.0",
