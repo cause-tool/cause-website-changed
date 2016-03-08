@@ -1,0 +1,32 @@
+{
+  "name": "cause-website-changed",
+  "version": "0.0.0",
+  "description": "checks if a (part of a) website has changed",
+  "main": "index.js",
+  "license": "CC-BY-NC-SA-4.0",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "freder.code@gmail.com",
+  "dependencies": {
+    "cause-utils": "*",
+    "crypto": "0.0.3",
+    "lodash": "^4.5.1",
+    "request": "^2.69.0",
+    "validator": "^5.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freder/cause-website-changed.git"
+  },
+  "keywords": [
+    "cause",
+    "cause-block",
+    "scraping"
+  ],
+  "bugs": {
+    "url": "https://github.com/freder/cause-website-changed/issues"
+  },
+  "homepage": "https://github.com/freder/cause-website-changed"
+}
