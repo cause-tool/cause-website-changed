@@ -1,6 +1,6 @@
 {
   "name": "cause-website-changed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "checks if a (part of a) website has changed",
   "main": "dist",
   "license": "CC-BY-NC-SA-4.0",
