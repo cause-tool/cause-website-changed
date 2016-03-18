@@ -4,7 +4,7 @@ const _ = require('lodash');
 const crypto = require('crypto');
 const request = require('request');
 const validator = require('validator');
-const scrapingUtils = require('cause-utils/scraping');
+const scrapingUtils = require('cause-utils/dist/scraping');
 
 
 // every block needs to exposes a function that takes
